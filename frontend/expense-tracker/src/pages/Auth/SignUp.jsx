@@ -27,8 +27,6 @@ const SignUp = () => {
   }
 
 
-
-
   return (
     <AuthLayout>
       <div className='lg:w-[100%] h-auto md:h-full mt-10 md:mt-0 flex flex-col justify-center'>
