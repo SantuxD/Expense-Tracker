@@ -1,6 +1,6 @@
 const express = require("express");
 const { protect } = require("../middleware/auth.middleware");
-const upload = require("../middleware/upload.middleware");
+const  upload  = require("../middleware/upload.middleware");
 
 const router = express.Router();
 
@@ -13,6 +13,7 @@ const {
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.get("/getUser", protect, getUserInfo);
+
 
 router.post("/uploadProfileImage", upload.single("image"), async (req, res) => {
   try {
