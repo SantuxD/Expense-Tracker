@@ -54,6 +54,9 @@ const deleteIncome = async (req, res) => {
 const downloadIncomeExcel = async (req, res) => {
   const userId = req.user.id;
   try {
+    if (!userId) {
+      return res.status(400).json({ message: "Unauthorized" });
+    }
     const incomes = await Income.find({ userId }).sort({ date: -1 });
 
     const data = incomes.map((income) => ({
@@ -63,10 +66,10 @@ const downloadIncomeExcel = async (req, res) => {
       Icon: income.icon,
     }));
 
-    const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.json_to_sheet(data);
-    XLSX.utils.book_append_sheet(wb, ws, "Incomes");
-    XLSX.writeFile(wb, "incomes_details.xlsx");
+    const newExcel = XLSX.utils.book_new();
+    const newExcelSheet = XLSX.utils.json_to_sheet(data);
+    XLSX.utils.book_append_sheet(newExcel, newExcelSheet, "Incomes");
+    XLSX.writeFile(newExcel, "incomes_details.xlsx");
     res.download("incomes_details.xlsx");
   } catch (error) {
     res.status(500).json({ message: "Server Error: " + error.message });
