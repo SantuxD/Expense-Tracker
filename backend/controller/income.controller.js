@@ -31,7 +31,15 @@ const addIncome = async (req, res) => {
 
 }
 
-const getAllIncome = async (req, res) => { };
+const getAllIncome = async (req, res) => {
+  const userId = req.user.id;
+  try {
+    const incomes = await Income.find({ userId }).sort({ date: -1 });
+    res.status(200).json(incomes);
+  } catch (error) {
+    res.status(500).json({ message: "Server Error: " + error.message });
+  }
+ };
 
 const deleteIncome = async (req, res) => { };
 
