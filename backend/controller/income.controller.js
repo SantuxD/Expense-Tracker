@@ -1,16 +1,15 @@
-const user = require("../models/User.models");
+const XLSX = require("xlsx");
 const Income = require("../models/Income.models");
-
 
 const addIncome = async (req, res) => {
   const userId = req.user.id;
   try {
-    const { icon, source, amount, date } = req.body
+    const { icon, source, amount, date } = req.body;
 
     if (!source || !amount || !date) {
       return res.status(400).json({
-        message: "all fields are required"
-      })
+        message: "all fields are required",
+      });
     }
 
     const newIncome = new Income({
@@ -18,18 +17,16 @@ const addIncome = async (req, res) => {
       icon,
       source,
       amount,
-      date: new Date(date)
-
-    })
+      date: new Date(date),
+    });
 
     await newIncome.save();
     console.log(req.body);
-    res.status(200).json(newIncome)
+    res.status(200).json(newIncome);
   } catch (error) {
-    res.status(500).json({ message: "server Error" + error.message })
+    res.status(500).json({ message: "server Error" + error.message });
   }
-
-}
+};
 
 const getAllIncome = async (req, res) => {
   const userId = req.user.id;
@@ -39,7 +36,7 @@ const getAllIncome = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Server Error: " + error.message });
   }
- };
+};
 
 const deleteIncome = async (req, res) => {
   const incomeId = req.params.id;
@@ -52,10 +49,29 @@ const deleteIncome = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Server Error: " + error.message });
   }
+};
 
- };
+const downloadIncomeExcel = async (req, res) => {
+  const userId = req.user.id;
+  try {
+    const incomes = await Income.find({ userId }).sort({ date: -1 });
 
-const downloadIncomeExcel = async (req, res) => { };
+    const data = incomes.map((income) => ({
+      Source: income.source,
+      Amount: income.amount,
+      Date: income.date.toISOString().split("T")[0],
+      Icon: income.icon,
+    }));
+
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.json_to_sheet(data);
+    XLSX.utils.book_append_sheet(wb, ws, "Incomes");
+    XLSX.writeFile(wb, "incomes_details.xlsx");
+    res.download("incomes_details.xlsx");
+  } catch (error) {
+    res.status(500).json({ message: "Server Error: " + error.message });
+  }
+};
 
 module.exports = {
   addIncome,
