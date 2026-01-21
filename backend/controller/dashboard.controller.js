@@ -1,7 +1,7 @@
 const Income = require("../models/Income.models");
 const Expense = require("../models/Expense.model");
 
-const { isValidObjectId, Types } = require("mongoose");
+const {  Types } = require("mongoose");
 
 const getDashboardData = async (req, res) => {
   try {
