@@ -5,11 +5,14 @@ import Input from "../../components/Inputs/Input";
 import { Link } from "react-router-dom";
 import { API_PATHS } from "../../utils/apiPath";
 import axiosInstance from "../../utils/axiosInstance";
+import { UserContext } from "../../context/Usercontext";
 
 const Login = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [error, setError] = React.useState(null);
+
+  const {updateUser} = React.useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -30,7 +33,7 @@ const Login = () => {
       const { token, user } = response.data;
       if (token) {
         localStorage.setItem("token", token);
-        localStorage.setItem("user", JSON.stringify(user));
+        updateUser(user);
         navigate("/dashboard");
       }
     } catch (err) {
