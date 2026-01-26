@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import ProfilePhotoSelector from "../../components/Inputs/ProfilePhotoSelector";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPath";
-import { UserContext } from "../../context/Usercontext";
+import { UserContext } from "@/context/UserContext";
 import { uploadImage } from "../../utils/uploadImage";
 
 const SignUp = () => {
@@ -44,7 +44,7 @@ const SignUp = () => {
         fullname: name,
         email,
         password,
-        profileImage: profileImageUrl,
+        profileImageUrl: profileImageUrl,
 
 
       });
