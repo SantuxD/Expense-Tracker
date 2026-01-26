@@ -1,7 +1,8 @@
 import React from "react";
 import { SIDE_MENU_DATA } from "../../utils/Data";
-import { UserContext } from "../../context/Usercontext";
+import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
+import CharAvatar from "../cards/CharAvatar";
 
 const SideMenu = ({ activeMenu }) => {
   const { user, clearUser } = React.useContext(UserContext);
@@ -28,13 +29,19 @@ const SideMenu = ({ activeMenu }) => {
         {user?.profileImageUrl ? (
           <img
             src={user?.profileImageUrl || ""}
-            alt="Profile Image"
+            alt="profile"
             className="w-20 h-20 bg-slate-400 rounded-full"
           />
         ) : (
-          <></>
+          <CharAvatar
+            fullName={user?.fullname || ""}
+            width="w-20"
+            style="text-xl"
+          />
         )}
-        <h5 className="text-gray-950 font-medium leading-6  ">{user?.fullName || ""}</h5>
+        <h5 className="text-gray-950 font-medium leading-6  ">
+          {user?.fullname || ""}
+        </h5>
       </div>
       {SIDE_MENU_DATA.map((item, index) => (
         <button
