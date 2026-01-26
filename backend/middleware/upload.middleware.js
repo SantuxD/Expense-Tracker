@@ -6,16 +6,21 @@ const storage = multer.diskStorage({
     cb(null, "uploads/");
   },
   filename: (req, file, cb) => {
-    cb(null, `${Date.now()} - ${file.originalname}`);
+    const cleanName = file.originalname.replace(/\s+/g, "_");
+    cb(null, Date.now() + "-" + cleanName);
   },
 });
 
 const fileFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith("image/jpg") || file.mimetype.startsWith("image/png") || file.mimetype.startsWith("image/jpeg")) {
+  if (
+    file.mimetype.startsWith("image/jpg") ||
+    file.mimetype.startsWith("image/png") ||
+    file.mimetype.startsWith("image/jpeg")
+  ) {
     cb(null, true);
-    } else {
+  } else {
     cb(new Error("only .jpg, .png,and .jpeg files are allowed"), false);
-    }
+  }
 };
 
 const upload = multer({ storage: storage, fileFilter: fileFilter });
