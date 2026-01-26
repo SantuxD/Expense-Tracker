@@ -7,7 +7,7 @@ const generateToken = (id) => {
 };
 
 const registerUser = async (req, res) => {
-  const { fullname, email, password } = req.body;
+  const { fullname, email, password, profileImageUrl } = req.body;
   try {
     if (!fullname || !email || !password) {
       return res.status(400).json({ message: "Please fill all the fields" });
@@ -20,7 +20,7 @@ const registerUser = async (req, res) => {
       fullname,
       email,
       password,
-      profileImageUrl: null,
+      profileImageUrl: profileImageUrl || null,
     });
     if (user) {
       return res.status(201).json({
@@ -60,6 +60,7 @@ const loginUser = async (req, res) => {
       .json({ message: " error logging in user " + error.message });
   }
 };
+
 
 const getUserInfo = async (req, res) => {
   try {
