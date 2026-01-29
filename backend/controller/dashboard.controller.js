@@ -1,7 +1,7 @@
 const Income = require("../models/Income.models");
 const Expense = require("../models/Expense.model");
 
-const {  Types } = require("mongoose");
+const { Types, isValidObjectId } = require("mongoose");
 
 const getDashboardData = async (req, res) => {
   try {
@@ -58,7 +58,7 @@ const getDashboardData = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      data: {
+      DashboardData: {
         totalbalance:
           (totalIncomeAgg[0]?.total || 0) - (totalExpenseAgg[0]?.total || 0),
         totalIncome: totalIncomeAgg[0]?.total || 0,
