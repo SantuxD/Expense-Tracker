@@ -4,17 +4,18 @@ import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import CharAvatar from "../cards/CharAvatar";
 
+
 const SideMenu = ({ activeMenu }) => {
   const { user, clearUser } = React.useContext(UserContext);
 
   const navigate = useNavigate();
 
-  const handleClick = (route) => {
-    if (route === "logout") {
+  const handleClick = (item) => {
+    if (item.action === "logout") {
       handleLogout();
-      return;
+    } else {
+      navigate(item.path);
     }
-    navigate(route);
   };
 
   const handleLogout = () => {
@@ -47,7 +48,7 @@ const SideMenu = ({ activeMenu }) => {
         <button
           key={`menu_${index}`}
           className={`w-full flex items-center gap-4 text-[15px] ${activeMenu == item.label ? "text-white bg-primary" : ""} px-6 py-3 rounded-lg mb-3 `}
-          onClick={() => handleClick(item.path)}
+          onClick={() => handleClick(item)}
         >
           <item.icon className=" text-xl " />
           {item.label}
