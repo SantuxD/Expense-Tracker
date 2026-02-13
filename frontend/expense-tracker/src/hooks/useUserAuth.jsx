@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "@/context/UserContext";
 
@@ -7,10 +6,17 @@ import axiosInstance from "@/utils/axiosInstance";
 import { useEffect, useContext } from "react";
 
 export const useUserAuth = () => {
-  const { user, updateUser, clearUser } = useContext(UserContext);
+  const { user, updateUser, clearUser, logout } = useContext(UserContext);
   const navigate = useNavigate();
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      clearUser();
+      navigate("/login");
+      return;
+    }
     if (user) return;
 
     let isMounted = true;
@@ -39,4 +45,5 @@ export const useUserAuth = () => {
       isMounted = false;
     };
   }, [updateUser, clearUser, navigate, user]);
+  return { user, logout };
 };
