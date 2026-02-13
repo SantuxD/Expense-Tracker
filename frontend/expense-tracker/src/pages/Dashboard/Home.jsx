@@ -1,5 +1,5 @@
 import DashboardLayout from "../../components/layouts/DashboardLayout";
-import { useUserAuth } from "../../hooks/UseuserAuth";
+import { useUserAuth } from "../../hooks/useUserAuth";
 import { useNavigate } from "react-router-dom";
 import { API_PATHS } from "../../utils/apiPath";
 import axiosInstance from "../../utils/axiosInstance";
@@ -14,6 +14,7 @@ import ExpenseTransaction from "../../components/Dashboard/ExpenseTransaction";
 import Last60DaysExpenses from "../../components/Dashboard/Last60DaysExpenses";
 import RecentIncomeWithChart from "../../components/Dashboard/RecentIncomeWithChart";
 import RecentIncome from "../../components/Dashboard/RecentIncome";
+import Logout from "./Logout";
 const Home = () => {
   useUserAuth();
 
@@ -100,6 +101,7 @@ const Home = () => {
             }
             onSeeMore={() => navigate("/income")}
           />
+          <Logout/>
         </div>
       </div>
     </DashboardLayout>
