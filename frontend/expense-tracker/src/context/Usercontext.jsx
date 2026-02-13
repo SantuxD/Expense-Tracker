@@ -10,11 +10,16 @@ export const UserProvider = ({ children }) => {
   };
 
   const clearUser = () => {
+    localStorage.removeItem("token");
     setUser(null);
   };
+  const logout = () =>{
+    localStorage.removeItem("token");
+    setUser(null);
+  }
 
   return (
-    <UserContext.Provider value={{ user, updateUser, clearUser }}>
+    <UserContext.Provider value={{ user, updateUser, clearUser, logout }}>
       {children}
     </UserContext.Provider>
   );
