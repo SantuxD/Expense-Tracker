@@ -4,11 +4,11 @@ import IncomeOverView from "../../components/Income/IncomeOverview";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPath";
 import Modal from "../../components/Modal";
-import AddIncomeForm from "../../components/Income/AddincomeForm";
+import AddIncomeForm from "../../components/Income/AddIncomeForm";
 import toast from "react-hot-toast";
 import IncomeList from "../../components/Income/IncomeList";
 import DeleteAlert from "../../components/DeleteAlert";
-import { useUserAuth } from "../../hooks/UseuserAuth";
+import { useUserAuth } from "../../hooks/useUserAuth";
 
 const Income = () => {
   useUserAuth();
@@ -88,7 +88,37 @@ const Income = () => {
     }
   };
 
-  const downloadIncomeDetails = async () => {};
+  const downloadIncomeDetails = async () => {
+    try {
+      const response = await axiosInstance.get(
+        API_PATHS.INCOME.DOWNLOAD_INCOME_CSV,
+        {
+          responseType: "blob",
+          headers: {
+            Accept: "*/*",
+          },
+        },
+      );
+
+      const blob = new Blob([response.data], {
+        type: response.headers["content-type"],
+      });
+
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+
+      link.href = url;
+      link.download = "income_details.xlsx";
+
+      document.body.appendChild(link);
+      link.click();
+
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.log("Download error:", error);
+    }
+  };
 
   useEffect(() => {
     fetchIncomeDetails();
