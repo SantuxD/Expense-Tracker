@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.post("/add", protect, addExpense);
 router.get("/get", protect, getAllExpenses);
-router.put("/download-excel", protect, downloadExpenseExcel);
+router.get("/download-excel", protect, downloadExpenseExcel);
 router.delete("/delete/:id", protect, deleteExpense);
 
 
