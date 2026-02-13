@@ -88,7 +88,40 @@ const Expense = () => {
       );
     }
   };
-  const downloadExpenseDetails = async () => {};
+  
+  const downloadExpenseDetails = async () => {
+  try {
+    const response = await axiosInstance.get(
+      API_PATHS.EXPENSE.DOWNLOAD_EXPENSE_CSV,
+      {
+        responseType: "blob",
+        headers: {
+          Accept: "*/*",   
+        },
+      }
+    );
+
+    const blob = new Blob([response.data], {
+      type: response.headers["content-type"],
+    });
+
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "expense_details.xlsx";
+
+    document.body.appendChild(link);
+    link.click();
+
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+
+  } catch (error) {
+    console.log("Download error:", error);
+  }
+};
+
 
   useEffect(() => {
     fetchExpenseDetails();
