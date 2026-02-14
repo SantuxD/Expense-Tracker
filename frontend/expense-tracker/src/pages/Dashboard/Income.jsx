@@ -28,7 +28,7 @@ const Income = () => {
       const response = await axiosInstance.get(
         `${API_PATHS.INCOME.GET_INCOMES}`,
       );
-      console.log("FULL RESPONSE 👉", response.data);
+    
 
       if (response.data) {
         setIncomeData(response.data);
