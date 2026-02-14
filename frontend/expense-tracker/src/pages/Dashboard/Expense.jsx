@@ -29,7 +29,7 @@ const Expense = () => {
       const response = await axiosInstance.get(
         `${API_PATHS.EXPENSE.GET_EXPENSES}`,
       );
-      console.log("FULL RESPONSE 👉", response.data);
+     
 
       if (response.data) {
         setExpenseData(response.data);
