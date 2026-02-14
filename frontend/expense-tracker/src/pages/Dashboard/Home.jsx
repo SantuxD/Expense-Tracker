@@ -29,7 +29,6 @@ const Home = () => {
       const response = await axiosInstance.get(
         `${API_PATHS.DASHBOARD.GET_DATA}`,
       );
-      console.log("DASHBOARD DATA 👉", response.data.DashboardData);
 
       if (response.data.DashboardData) {
         setDashboardData(response.data.DashboardData);
@@ -101,7 +100,7 @@ const Home = () => {
             }
             onSeeMore={() => navigate("/income")}
           />
-          <Logout/>
+          <Logout />
         </div>
       </div>
     </DashboardLayout>
