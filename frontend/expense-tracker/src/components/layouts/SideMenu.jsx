@@ -1,12 +1,12 @@
 import React from "react";
 import { SIDE_MENU_DATA } from "../../utils/Data";
-import { UserContext } from "../../context/UserContext";
+import { Usercontext } from "../../context/Usercontext";
 import { useNavigate } from "react-router-dom";
 import CharAvatar from "../cards/CharAvatar";
 
 
 const SideMenu = ({ activeMenu }) => {
-  const { user, clearUser } = React.useContext(UserContext);
+  const { user, clearUser } = React.useContext(Usercontext);
 
   const navigate = useNavigate();
 

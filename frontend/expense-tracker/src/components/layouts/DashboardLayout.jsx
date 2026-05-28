@@ -1,11 +1,11 @@
 import React from "react";
 import Navbar from "./Navbar";
 import SideMenu from "./SideMenu";
-import { UserContext } from "../../context/UserContext";
+import { Usercontext } from "../../context/Usercontext";
 
-const DashboardLayout = ({children, activeMenu}) => {
+const DashboardLayout = ({ children, activeMenu }) => {
 
-    const { user } = React.useContext(UserContext);
+  const { user } = React.useContext(Usercontext);
   return (
     <div>
       <Navbar activeMenu={activeMenu} />
